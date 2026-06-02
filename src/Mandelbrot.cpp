@@ -4,15 +4,15 @@
 
 #include <complex>
 #include "Mandelbrot.h"
-class Mande lbrot {
-public:
 
 /* Checks if: Z(n+1) = Z^(n) + C diverges or not
  * This approach is approximate as it doesn't actually check for the sequence divergence.
  * see "C++ Implementation" in docs folder.
  */
-bool isDivergent(std::complex<double> c) {
+
+bool Mandelbrot::isDivergent(std::complex<double> c) {
     std::complex<double> z (0,0); // Initial value for z (z(0)) should be 0 + 0i
+    irritation = 0;
 
     while (irritation < MAX_IRRITATION) {
         z = z * z + c; // the formula for mandelbrot function
@@ -31,12 +31,6 @@ bool isDivergent(std::complex<double> c) {
     return true;
 }
 
-int getIrritation() const { return irritation; }
-
-private:
-
-const int MAX_IRRITATION = 200;
-const double MAX_MAGNITUDE = 2;
-int irritation = 0;
-
-};
+int Mandelbrot::getIrritation() const {
+    return irritation;
+}

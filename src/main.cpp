@@ -20,8 +20,8 @@ int main()
 			if ( event->is<sf::Event::Closed>() )
 				window.close();
 		}
-		window.draw(sprite);
 		window.clear();
+		window.draw(sprite);
 		window.display();
 	}
 }
