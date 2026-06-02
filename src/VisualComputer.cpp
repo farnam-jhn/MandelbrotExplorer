@@ -11,7 +11,11 @@ sf::Image VisualComputer::computeImage(Mandelbrot mb) {
     // loops through the image and check if each pixel is in the set or not
     for (int x = 0; x < WIDTH; x++) {
         for (int y = 0; y < HEIGHT; y++) {
-            double realC = (x - WIDTH / 2.0) * SCALE - 0.5;
+            /* Pixels in the image are saved in an array;
+             * this means that coordinating system in the image and cartesian coordinating
+             * systems are distinct
+             */
+            double realC = (x - WIDTH / 2.0) * SCALE - 0.5; // maps each pixel on the image to a point on cartesian coordinating system.
             double imagC = (y - HEIGHT / 2.0) * SCALE;
 
             std::complex<double> c(realC, imagC);

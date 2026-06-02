@@ -3,12 +3,11 @@
 #include "VisualComputer.h"
 int main()
 {
-	sf::RenderWindow window( sf::VideoMode( { 800, 600} ), "Mandelbrot Explorer" );
+	sf::RenderWindow window( sf::VideoMode( {800,600} ), "Mandelbrot Explorer" );
 
 	const Mandelbrot MB;
-	VisualComputer vc;
 
-	sf::Image image = vc.computeImage(MB);
+	sf::Image image = VisualComputer::computeImage(MB);
 
 	sf::Texture texture(image);
 	sf::Sprite sprite(texture);

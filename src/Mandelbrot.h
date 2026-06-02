@@ -13,7 +13,7 @@ public:
     int getIrritation() const;
 
 private:
-    const int MAX_IRRITATION = 200;
+    const int MAX_IRRITATION = 500;
     const double MAX_MAGNITUDE = 2.0;
     int irritation = 0;
 };
