@@ -3,7 +3,7 @@
 #include "VisualComputer.h"
 int main()
 {
-	sf::RenderWindow window( sf::VideoMode( {800,600} ), "Mandelbrot Explorer" );
+	sf::RenderWindow window( sf::VideoMode( {VisualComputer::getWidth(),VisualComputer::getHeight()} ), "Mandelbrot Explorer" );
 
 	const Mandelbrot MB; 
 

@@ -32,3 +32,6 @@ cmake --build .
 
 ## Other docs
 See [Documents folder](docs) for more details on the project.
+
+## Screenshots
+![Screenshot](docs/v2.png)

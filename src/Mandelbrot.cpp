@@ -10,11 +10,11 @@
  * see "C++ Implementation" in docs folder.
  */
 
-int Mandelbrot::irritationsCount(std::complex<double> c) {
+int Mandelbrot::iterationsCount(std::complex<double> c) {
     std::complex<double> z (0,0); // Initial value for z (z(0)) should be 0 + 0i
-    int irritation = 0;
+    int iteration = 0;
 
-    while (irritation < MAX_IRRITATION) {
+    while (iteration < MAX_ITERATIONS) {
         z = z * z + c; // the formula for mandelbrot function
 
         /* Approach bellow is used so we can skip using sqrt.
@@ -25,12 +25,12 @@ int Mandelbrot::irritationsCount(std::complex<double> c) {
         if (std::norm(z) >= MAX_MAGNITUDE * MAX_MAGNITUDE) {
             break;
         }
-        irritation++;
+        iteration++;
     }
 
-    return irritation;
+    return iteration;
 }
 
-int Mandelbrot::getMaxIrritations() const {
-    return MAX_IRRITATION;
+int Mandelbrot::getMaxIterations() const {
+    return MAX_ITERATIONS;
 }

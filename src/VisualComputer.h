@@ -11,11 +11,15 @@
 class VisualComputer {
     public:
     static sf::Image computeImage(Mandelbrot mb);
+    static unsigned int getWidth();
+    static unsigned int getHeight();
     private:
-    static sf::Color colorFromGradient(const std::vector<sf::Color> &palette, int irritation, int maxIrritation);
+    static sf::Color smoothColor(const std::vector<sf::Color> &palette, int iteration, int maxIterations);
+    static sf::Color lerpColor(sf::Color color1, sf::Color color2, double t);
 
-    static constexpr int WIDTH = 800;
-    static constexpr int HEIGHT = 600;
+
+    static constexpr int WIDTH = 1440;
+    static constexpr int HEIGHT = 900;
     static constexpr double SCALE = 4.0 / WIDTH;
 
     static const std::vector<sf::Color> colorPalette;
