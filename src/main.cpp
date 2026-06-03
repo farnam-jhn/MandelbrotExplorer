@@ -5,7 +5,7 @@ int main()
 {
 	sf::RenderWindow window( sf::VideoMode( {800,600} ), "Mandelbrot Explorer" );
 
-	const Mandelbrot MB;
+	const Mandelbrot MB; 
 
 	sf::Image image = VisualComputer::computeImage(MB);
 

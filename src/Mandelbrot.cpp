@@ -10,9 +10,9 @@
  * see "C++ Implementation" in docs folder.
  */
 
-bool Mandelbrot::isDivergent(std::complex<double> c) {
+int Mandelbrot::irritationsCount(std::complex<double> c) {
     std::complex<double> z (0,0); // Initial value for z (z(0)) should be 0 + 0i
-    irritation = 0;
+    int irritation = 0;
 
     while (irritation < MAX_IRRITATION) {
         z = z * z + c; // the formula for mandelbrot function
@@ -23,14 +23,14 @@ bool Mandelbrot::isDivergent(std::complex<double> c) {
             * this is slower as the std::abs function uses square roots.
             */
         if (std::norm(z) >= MAX_MAGNITUDE * MAX_MAGNITUDE) {
-            return false;
+            break;
         }
         irritation++;
     }
 
-    return true;
+    return irritation;
 }
 
-int Mandelbrot::getIrritation() const {
-    return irritation;
+int Mandelbrot::getMaxIrritations() const {
+    return MAX_IRRITATION;
 }

@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "FUTURE IDEA.md",
+                "file": "TODOs.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "FUTURE IDEA"
+              "title": "TODOs"
             }
           },
           {
@@ -55,16 +55,16 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Mandelbrot explorer.md",
+                "file": "C++ Implementation.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Mandelbrot explorer"
+              "title": "C++ Implementation"
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -226,13 +226,13 @@
       "bases:Create new base": false
     }
   },
-  "active": "54d325821399387a",
+  "active": "fc6676ac4eff8e6a",
   "lastOpenFiles": [
-    "TODOs.md",
     "FUTURE IDEA.md",
-    "C++ Implementation.md",
     "The math behind.md",
+    "C++ Implementation.md",
     "Mandelbrot explorer.md",
+    "TODOs.md",
     "The.md",
     "The 1.md",
     "Welcome.md"

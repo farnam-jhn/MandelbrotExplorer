@@ -19,7 +19,15 @@ this is because when `|Z| >= magnitude` we have : `|Z|^2 >= magnitude * |Z|`.
 
 irritations count matters because if a curtain `C` gives us divergence the computer would never know this.
 this means the divergence checker function actually reaches a `C` that makes the `Z(n+1) = (Z(n))^2 + c` sequence divergence it just calculates more and more `Z`s. since we can't reach infinity (where we can make sure C makes the sequence divergent) we can limit the loop so after a curtain amount of irritations it supposes C makes the sequence divergent. 
+#### Simple optimization 
 
+instead of comparing the actual magnitude to a number we can compare norm of the `Z` to square of the magnitude:
+```Math
+Z = a + bi
+|Z| = sqrt(a^2 + b^2)
+norm(Z) = Z.conj(Z) = |Z|^2 = a^2 + b^2
+```
+using this approach we skipped a square root. this would make the calculations faster
 
 
 

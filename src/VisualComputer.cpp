@@ -20,14 +20,28 @@ sf::Image VisualComputer::computeImage(Mandelbrot mb) {
 
             std::complex<double> c(realC, imagC);
 
-            bool inSet = mb.isDivergent(c);
-            if (inSet) {
-                image.setPixel({static_cast<unsigned>(x), static_cast<unsigned>(y)}, sf::Color::Black);
-            } else {
-                image.setPixel({static_cast<unsigned>(x), static_cast<unsigned>(y)}, sf::Color::White);
-            }
+            int irritation = mb.irritationsCount(c);
+            image.setPixel({x,y}, colorFromGradient(colorPalette, irritation, mb.getMaxIrritations()));
         }
     }
-
+    
     return image;
 }
+
+sf::Color VisualComputer::colorFromGradient(const std::vector<sf::Color> &palette, int irritation, int maxIrritation) {
+    double tempRatio = static_cast<double>(irritation) / static_cast<double>(maxIrritation);
+
+    auto index = static_cast<std::size_t>(tempRatio * (palette.size() - 1));
+
+    return palette[index];
+}
+
+// A simple palette of colors used in colorFromGradient function
+const std::vector<sf::Color> VisualComputer::colorPalette = {
+    sf::Color(0, 7, 100),
+    sf::Color(32, 107, 203),
+    sf::Color(237, 255, 255),
+    sf::Color(255, 170, 0),
+    sf::Color(0, 2, 0)
+};
+

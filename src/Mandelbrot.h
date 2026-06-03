@@ -9,13 +9,12 @@
 
 class Mandelbrot {
 public:
-    bool isDivergent(std::complex<double> c);
-    int getIrritation() const;
+int irritationsCount(std::complex<double> c);
+int getMaxIrritations() const;
 
 private:
-    const int MAX_IRRITATION = 500;
+    const int MAX_IRRITATION = 200;
     const double MAX_MAGNITUDE = 2.0;
-    int irritation = 0;
 };
 
 
