@@ -5,31 +5,73 @@
 #include "VisualComputer.h"
 #include "Mandelbrot.h"
 #include <SFML/Graphics.hpp>
+#include <algorithm>
+#include <cstdint>
+#include <thread>
+#include <vector>
 
-sf::Image VisualComputer::computeImage(Mandelbrot mb) {
-    sf::Image image({WIDTH, HEIGHT}, sf::Color::Blue);
-    // loops through the image and check if each pixel is in the set or not
-    for (int x = 0; x < WIDTH; x++) {
-        for (int y = 0; y < HEIGHT; y++) {
-            /* Pixels in the image are saved in an array;
-             * this means that coordinating system in the image and cartesian coordinating
-             * systems are distinct
-             */
-            double realC = (x - WIDTH / 2.0) * SCALE - 0.5; // maps each pixel on the image to a point on cartesian coordinating system.
-            double imagC = (y - HEIGHT / 2.0) * SCALE;
+void VisualComputer::computeImage(const Mandelbrot &mb, unsigned int width, unsigned int height, unsigned int startWidth, unsigned int startHeight, sf::Image &currentImage) const {
+    std::vector<std::uint8_t> pixels(static_cast<std::size_t>(width) * height * 4, 0);
 
-            std::complex<double> c(realC, imagC);
-
-            int iteration = mb.iterationsCount(c);
-            image.setPixel({x,y}, smoothColor(colorPalette, iteration, mb.getMaxIterations()));
-        }
+    if (startHeight >= height || startWidth >= width) {
+        currentImage = sf::Image({width, height}, pixels.data());
+        return;
     }
-    
-    return image;
+
+    const unsigned int rowsToCompute = height - startHeight;
+    const unsigned int requestedThreadCount = std::max(10u, std::thread::hardware_concurrency());
+    const unsigned int threadCount = std::min(requestedThreadCount, rowsToCompute);
+    const unsigned int rowsPerThread = (rowsToCompute + threadCount - 1) / threadCount;
+
+    std::vector<std::thread> workers;
+    workers.reserve(threadCount);
+
+    for (unsigned int threadIndex = 0; threadIndex < threadCount; threadIndex++) {
+        const unsigned int yBegin = startHeight + threadIndex * rowsPerThread;
+        const unsigned int yEnd = std::min(yBegin + rowsPerThread, height);
+
+        /* Creates a new thread (in anonymous form) and adds it to workers vector
+         * this is beneficial for joining the threads.
+         */
+        workers.emplace_back([&, yBegin, yEnd]() {
+            // Loops through this thread's rows and checks if each pixel is in the set.
+            for (unsigned int y = yBegin; y < yEnd; y++) {
+                for (unsigned int x = startWidth; x < width; x++) {
+                    /* Pixels in the image are saved in an array;
+                     * this means that coordinating system in the image and cartesian coordinating
+                     * systems are distinct
+                     */
+                    double realC = (x - WIDTH / 2.0) * SCALE - 0.5; // maps each pixel on the image to a point on cartesian coordinating system.
+                    double imagC = (y - HEIGHT / 2.0) * SCALE;
+
+                    std::complex<double> c(realC, imagC);
+
+                    int iteration = mb.iterationsCount(c);
+                    sf::Color color = smoothColor(colorPalette, iteration, mb.getMaxIterations());
+
+                    const std::size_t pixelIndex = (static_cast<std::size_t>(y) * width + x) * 4;
+                    pixels[pixelIndex] = color.r;
+                    pixels[pixelIndex + 1] = color.g;
+                    pixels[pixelIndex + 2] = color.b;
+                    pixels[pixelIndex + 3] = color.a;
+                }
+            }
+        });
+    }
+
+    for (std::thread &worker : workers) {
+        worker.join();
+    }
+
+    currentImage = sf::Image({width, height}, pixels.data());
 }
 
 // Gives a color for each iteration amount
-sf::Color VisualComputer::smoothColor(const std::vector<sf::Color> &palette, int iteration, int maxIterations) {
+sf::Color VisualComputer::smoothColor(const std::vector<sf::Color> &palette, int iteration, int maxIterations) const {
+    if (iteration >= maxIterations) {
+        return palette.back();
+    }
+
     double t = static_cast<double>(iteration) / static_cast<double>(maxIterations);
     double scaled = t * (palette.size() - 1);
 
@@ -45,10 +87,10 @@ sf::Color VisualComputer::smoothColor(const std::vector<sf::Color> &palette, int
  * it benefits from linear interpolation (aka. lerp)
  * for more info check docs.
  */
-sf::Color VisualComputer::lerpColor(sf::Color color1, sf::Color color2, double t) {
+sf::Color VisualComputer::lerpColor(sf::Color color1, sf::Color color2, double t) const {
     // Lambda form im lerp
     auto lerp = [t](std::uint8_t x, std::uint8_t y) {
-        return (x + (y - x) * t);
+        return static_cast<std::uint8_t>(x + (y - x) * t);
     };
 
     return sf::Color(
@@ -59,11 +101,11 @@ sf::Color VisualComputer::lerpColor(sf::Color color1, sf::Color color2, double t
     );
 }
 
-unsigned int VisualComputer::getWidth(){
+unsigned int VisualComputer::getWidth() const{
     return static_cast<unsigned int>(WIDTH);
 }
 
-unsigned int VisualComputer::getHeight(){
+unsigned int VisualComputer::getHeight() const{
     return static_cast<unsigned int>(HEIGHT);
 }
 

@@ -7,15 +7,17 @@
 
 #include "Mandelbrot.h"
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 class VisualComputer {
     public:
-    static sf::Image computeImage(Mandelbrot mb);
-    static unsigned int getWidth();
-    static unsigned int getHeight();
+    void computeImage(const Mandelbrot &mb, unsigned int width, unsigned int height, unsigned int startWidth, unsigned int startHeight, sf::Image &currentImage) const;
+
+    unsigned int getWidth() const;
+    unsigned int getHeight() const;
     private:
-    static sf::Color smoothColor(const std::vector<sf::Color> &palette, int iteration, int maxIterations);
-    static sf::Color lerpColor(sf::Color color1, sf::Color color2, double t);
+    sf::Color smoothColor(const std::vector<sf::Color> &palette, int iteration, int maxIterations) const;
+    sf::Color lerpColor(sf::Color color1, sf::Color color2, double t) const;
 
 
     static constexpr int WIDTH = 1440;

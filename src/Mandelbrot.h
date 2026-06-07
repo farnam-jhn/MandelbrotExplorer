@@ -9,11 +9,11 @@
 
 class Mandelbrot {
 public:
-int iterationsCount(std::complex<double> c);
+int iterationsCount(std::complex<double> c) const;
 int getMaxIterations() const;
 
 private:
-    const int MAX_ITERATIONS = 500;
+    const int MAX_ITERATIONS = 180;
     const double MAX_MAGNITUDE = 2.0;
 };
 

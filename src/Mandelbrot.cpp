@@ -10,7 +10,7 @@
  * see "C++ Implementation" in docs folder.
  */
 
-int Mandelbrot::iterationsCount(std::complex<double> c) {
+int Mandelbrot::iterationsCount(std::complex<double> c) const {
     std::complex<double> z (0,0); // Initial value for z (z(0)) should be 0 + 0i
     int iteration = 0;
 

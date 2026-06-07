@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.28)
 project(CMakeSFMLProject LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+find_package(Threads REQUIRED)
 
 include(FetchContent)
 FetchContent_Declare(SFML
@@ -18,6 +19,6 @@ add_executable(mb-explorer src/main.cpp
         src/VisualComputer.cpp
         src/VisualComputer.h)
 target_compile_features(mb-explorer PRIVATE cxx_std_17)
-target_link_libraries(mb-explorer PRIVATE SFML::Graphics)
+target_link_libraries(mb-explorer PRIVATE SFML::Graphics Threads::Threads)
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT mb-explorer)
