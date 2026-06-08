@@ -6,9 +6,7 @@
 #include "Mandelbrot.h"
 #include <SFML/Graphics.hpp>
 #include <algorithm>
-#include <complex>
 #include <cstdint>
-#include <cstddef>
 #include <thread>
 #include <vector>
 

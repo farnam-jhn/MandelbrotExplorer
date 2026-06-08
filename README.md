@@ -14,15 +14,7 @@ This project provides a straightforward way to compute the Mandelbrot set. The f
 
 ### Prerequisites
 *   **C++ Compiler**
-*   **CMake 3.22 or newer**
-
-On Ubuntu, install the compiler, CMake, Git, and the native libraries needed to build SFML:
-```bash
-sudo apt update
-sudo apt install build-essential cmake git \
-    libx11-dev libxrandr-dev libxcursor-dev libxi-dev libudev-dev \
-    libgl1-mesa-dev libegl1-mesa-dev libfreetype-dev libharfbuzz-dev
-```
+*   **CMake**
 
 ### Building the Project
 1. Clone the repository:

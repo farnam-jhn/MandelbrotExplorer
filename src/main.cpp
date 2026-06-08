@@ -2,7 +2,11 @@
 #include "Mandelbrot.h"
 #include "VisualComputer.h"
 
-#include <optional>
+
+void threadStarter() {
+
+}
+
 
 int main() {
 	const Mandelbrot MB;
